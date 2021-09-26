@@ -1,0 +1,46 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Average cars per household",
+    "width": 900,
+    "height": 600,
+    "projection": {"type":"equirectangular"},
+    "data": {
+        "url": "https://raw.githubusercontent.com/kang0008/FIT3179assignment2/main/vic_lga.topojson",
+        "format": {"type": "topojson", "feature": "vic_lga"}
+            },
+    "transform": [
+        {
+        "lookup": "properties.ABB_NAME",
+        "from": {
+            "data": {
+            "url": "https://raw.githubusercontent.com/kang0008/FIT3179assignment2/main/final_sales_vic.csv"
+                    },
+        "key": "LGA",
+        "fields": ["average per household","total cars","total households"]
+        }
+    }
+    ],
+    "mark": {"type": "geoshape"},
+    "encoding": {
+    "color": {
+        "field": "average per household",
+        "type": "quantitative",
+        "scale": {
+        "type": "threshold",
+        "range":["#ffffcc",
+            "#c2e699",
+            "#78c679",
+            "#238443"],
+        "domain": [2,2.1,2.15]
+                }
+            },
+    "tooltip": [
+        {"field":"properties.ABB_NAME", "type":"nominal"},
+        {"field":"average per household", "type":"quantitative"},
+        {"field":"total cars", "type":"quantitative"},
+        {"field":"total households", "type":"quantitative"}
+    ]
+    }
+}
+    
+
